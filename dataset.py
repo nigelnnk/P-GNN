@@ -89,6 +89,7 @@ def get_tg_dataset(args, dataset_name, use_cache=True, remove_feature=False):
         links_test_list = []
         for i, data in enumerate(dataset):
             if 'link' in args.task:
+                print(f"args.task = {args.task}")
                 get_link_mask(data, args.remove_link_ratio, resplit=True,
                               infer_link_positive=True if args.task == 'link' else False)
             links_train_list.append(data.mask_link_positive_train)
@@ -131,7 +132,7 @@ def nx_to_tg_data(graphs, features, edge_labels=None):
     for i in range(len(graphs)):
         feature = features[i]
         graph = graphs[i].copy()
-        graph.remove_edges_from(graph.selfloop_edges())
+        graph.remove_edges_from(nx.selfloop_edges(graph))
 
         # relabel graphs
         keys = list(graph.nodes)

@@ -116,6 +116,7 @@ def get_link_mask(data, remove_ratio=0.2, resplit=True, infer_link_positive=True
     if resplit:
         if infer_link_positive:
             data.mask_link_positive = deduplicate_edges(data.edge_index.numpy())
+            print("accessed")
         data.mask_link_positive_train, data.mask_link_positive_val, data.mask_link_positive_test = \
             split_edges(data.mask_link_positive, remove_ratio)
     resample_edge_mask_link_negative(data)
